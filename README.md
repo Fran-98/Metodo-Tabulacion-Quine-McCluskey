@@ -1,0 +1,1 @@
+# Metodo-Tabulacion-Quine-McCluskey
