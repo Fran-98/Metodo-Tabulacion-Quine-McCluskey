@@ -68,9 +68,9 @@ for fila in range(pow(2,cantidad)):
         
     Tabla.append(row)
 
-df = pd.DataFrame(Tabla, columns=(variables))
+df_Tabla = pd.DataFrame(Tabla, columns=(variables))
 
-print(df)
+print(df_Tabla)
 
 # Separamos la funcion en términos
 tipo = tipoDeFuncion(Funcion)
@@ -106,11 +106,29 @@ for i in fund:
             g.append("-")
             
     bases.append(g)
-print(bases)
- 
-for i in bases:
-    for w in Tabla:
-        
+
+miniTerminos = []
+miniTerminos_index = []
+
+for n in bases:
+    for t in Tabla:
+        incidencia = 0
+        for i in range(len(n)):
+            if n[i] == t[i]:
+                incidencia = incidencia + 1
+                
+        if incidencia == n.count(0)+n.count(1):
+            if t not in miniTerminos:
+                miniTerminos.append(t)
+                miniTerminos_index.append(Tabla.index(t))
+                
+miniTerminos.sort()
+miniTerminos_index.sort()
+
+df_miniTerminos = pd.DataFrame(miniTerminos, columns = (variables), index = (miniTerminos_index))
+print(miniTerminos)
+print(miniTerminos_index)
+print(df_miniTerminos)
 #print(Tabla.index([0,1,0,0]))
    
 #print(np.add(Tabla[8],Tabla[12]))
