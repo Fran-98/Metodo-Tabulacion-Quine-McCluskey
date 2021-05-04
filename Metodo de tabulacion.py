@@ -70,7 +70,7 @@ for fila in range(pow(2,cantidad)):
 
 df_Tabla = pd.DataFrame(Tabla, columns=(variables))
 
-print(df_Tabla)
+#print(df_Tabla)
 
 # Separamos la funcion en términos
 tipo = tipoDeFuncion(Funcion)
@@ -126,9 +126,26 @@ miniTerminos.sort()
 miniTerminos_index.sort()
 
 df_miniTerminos = pd.DataFrame(miniTerminos, columns = (variables), index = (miniTerminos_index))
-print(miniTerminos)
-print(miniTerminos_index)
+#print(miniTerminos)
+#print(miniTerminos_index)
+
 print(df_miniTerminos)
+
+tabulacion = []
+tabulacion_index = []
+for i in range(cantidad+1):
+    tabulacion.append([])
+    tabulacion_index.append([])
+for i in miniTerminos:
+    tabulacion[i.count(1)].append(i)
+    tabulacion_index[i.count(1)].append(miniTerminos_index[miniTerminos.index(i)]) #No necesario
+    
+#print(tabulacion)
+#print(tabulacion_index)
+
+df_tabulacion = pd.DataFrame(tabulacion)
+
+print(df_tabulacion)
 #print(Tabla.index([0,1,0,0]))
    
 #print(np.add(Tabla[8],Tabla[12]))
