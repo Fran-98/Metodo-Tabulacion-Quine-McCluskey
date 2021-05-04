@@ -5,16 +5,15 @@ Created on Mon May  3 20:24:10 2021
 @author: Fran
 """
 
-import math
 import pandas as pd
 import numpy as np
 
 Funcion = "A'+B*C+C*D"
 
+# Funcion que detecta el tipo de funcion
 def tipoDeFuncion(f):
     
     parentesis = 0
-    tipo = "nada"
     for c in f:
         if c == "(":
             parentesis = 1
@@ -24,22 +23,21 @@ def tipoDeFuncion(f):
             return "sumas"
         elif c == "*" and parentesis == 0:
             return "productos"
-        
-
+    
 b=[]
-c=[]
+variables=[]
     
 for i in Funcion:
     if i != "'" and i != "+" and i != "*" and i != "(" and i != ")":
             
         b.append(i)
             
-        if i not in c:
-            c.append(i)
+        if i not in variables:
+            variables.append(i)
             
-c.sort()
+variables.sort()
 
-cantidad = len(c) 
+cantidad = len(variables) 
 
 
 # Obtener miniterminos y tabla
@@ -70,18 +68,52 @@ for fila in range(pow(2,cantidad)):
         
     Tabla.append(row)
 
-df = pd.DataFrame(Tabla, columns=(c))
+df = pd.DataFrame(Tabla, columns=(variables))
 
 print(df)
 
 # Separamos la funcion en términos
+tipo = tipoDeFuncion(Funcion)
 
-if tipoDeFuncion(Funcion) == "sumas":
+if tipo == "sumas":
     s = Funcion.split("+")
 else:
     s = Funcion.split("*")
+
     
-print(np.add(Tabla[8],Tabla[12]))
+#En cada termino detectar que mini tenemos (funcion)?
+
+fund = []
+bases = []
+for termino in s:
+    base = []
+    for i in termino:
+        if i in variables:
+            base.append(variables.index(i)+1)
+        elif i == "'":
+            base[-1] = base[-1]*-1
+              
+    fund.append(base)
+for i in fund:
+    g = []
+    
+    for w in range(cantidad):
+        if w+1 in i:
+            g.append(1)
+        elif -w-1 in i:
+            g.append(0)
+        else:
+            g.append("-")
+            
+    bases.append(g)
+print(bases)
+ 
+for i in bases:
+    for w in Tabla:
+        
+#print(Tabla.index([0,1,0,0]))
+   
+#print(np.add(Tabla[8],Tabla[12]))
 
 
 
